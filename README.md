@@ -7,3 +7,4 @@
 - Communications - socket.io
 - Dynamic ID generator for rooms - UUID
 - Allows for quick refreshing of app when changes are names so server doesn't need to be restarted everytime - Nodemon
+- Creates connections between different users using webRTC + server to create dynamic ids for connecting between different users - Peer JS
