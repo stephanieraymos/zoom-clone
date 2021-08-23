@@ -6,7 +6,7 @@ const myPeer = new Peer(undefined, {
   port: "3001",
 });
 const myVideo = document.createElement("video");
-myVideo.nuted = true; // Mutes ourselves so we don't hear our own audio
+myVideo.muted = true; // Mutes ourselves so we don't hear our own audio
 
 navigator.mediaDevices
   .getUserMedia({
@@ -15,15 +15,31 @@ navigator.mediaDevices
   })
   .then((stream) => {
     addVideoStream(myVideo, stream);
+
+    socket.on("user-connected", (userId) => {
+      connectToNewUser(userId, stream);
+    });
   });
 myPeer.on("open", (id) => {
   socket.emit("join-room", ROOM_ID, id);
 });
 
-socket.on("user-connected", (userId) => {
-  console.log("User connected: " + userId);
-});
+// TEST CODE
+// socket.on("user-connected", (userId) => {
+//   console.log("User connected: " + userId);
+// });
 
+function connectToNewUser(userId, stream) {
+  const call = myPeer.call(userId, stream);
+  const video = document.createElement("video");
+  call.on("stream", (userVideoStream) => {
+    addVideoStream(video, userVideoStream);
+  });
+  // When user ends, remove that video
+  call.on("close", () => {
+    video.remove();
+  });
+}
 // Once video is loaded on page, play the video
 function addVideoStream(video, stream) {
   video.srcObject = stream;
