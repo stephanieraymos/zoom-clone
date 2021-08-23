@@ -17,8 +17,8 @@ app.get("/:room", (req, res) => {
 io.on("connection", (socket) => {
   // Whenver room is joined, we pass is room id and user id
   socket.on("join-room", (roomId, userId) => {
-socket.join(roomId);
-socket.to(roomId).broadcast.emit("user-connected", userId); // Sending broadcast message to room
-});
+    socket.join(roomId);
+    socket.broadcast.to(roomId).emit("user-connected", userId);
+  });
 });
 server.listen(3000);
