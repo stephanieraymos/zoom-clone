@@ -14,4 +14,10 @@ app.get("/:room", (req, res) => {
   res.render("room", { roomId: req.params.room });
 });
 
+io.on("connection", (socket) => {
+  // Whenver room is joined, we pass is room id and user id
+  socket.on("join-room", (roomId, userId) => {
+    console.log(roomId, userId);
+  });
+});
 server.listen(3000);
