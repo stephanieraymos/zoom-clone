@@ -15,6 +15,14 @@
     <script src="script.js" defer></script>
     <title>Room</title>
     <style>
+      html {
+        min-height: 100%;
+      }
+      body {
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(to bottom, #a16df5, #fafafa);
+      }
       #video-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, 300px);
@@ -26,7 +34,6 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-
       }
     </style>
   </head>
