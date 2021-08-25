@@ -19,6 +19,10 @@ navigator.mediaDevices
     // When someone enters into the call, answer the call with the current stream
     myPeer.on("call", (call) => {
       call.answer(stream);
+      const video = document.createElement("video");
+      call.on("stream", (userVideoStream) => {
+        addVideoStream(video, userVideoStream);
+      })
     });
 
     socket.on("user-connected", (userId) => {
