@@ -16,6 +16,11 @@ navigator.mediaDevices
   .then((stream) => {
     addVideoStream(myVideo, stream);
 
+    // When someone enters into the call, answer the call with the current stream
+    myPeer.on("call", (call) => {
+      call.answer(stream);
+    });
+
     socket.on("user-connected", (userId) => {
       connectToNewUser(userId, stream);
     });
