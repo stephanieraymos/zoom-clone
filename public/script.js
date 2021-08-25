@@ -32,8 +32,9 @@ navigator.mediaDevices
   });
 socket.on("user-disconnected", userId => {
   // Closing the connection of the user that disconnected
-  peers[userId].close();
-  // console.log(userId)
+  if(peers[userId]){
+    peers[userId].close();
+  }  // console.log(userId)
 })
 myPeer.on("open", (id) => {
   socket.emit("join-room", ROOM_ID, id);
